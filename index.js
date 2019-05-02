@@ -5,31 +5,7 @@ require('./config/mongo-connector');
 const { User, Book } = require('./models');
 
 const typeDefs = require('./schemas');
-
-const resolvers = {
-  Query: {
-    getUsers: async () => await User.find({}).exec(),
-    getBooks: async () => await Book.find({}).exec()
-  },
-  Mutation: {
-    addUser: async (_, args) => {
-      try {
-        let response = await User.create(args);
-        return response;
-      } catch (error) {
-        return error.message;
-      }
-    },
-    addBook: async (_, args) => {
-      try {
-        let response = await Book.create(args);
-        return response;
-      } catch (error) {
-        return error.message;
-      }
-    }
-  }
-};
+const resolvers = require('./resolvers');
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
